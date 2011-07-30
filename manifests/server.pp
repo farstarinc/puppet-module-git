@@ -24,24 +24,14 @@ class git::server($authorized_keys=[], $username="git", $guid=2010) {
     owner => $username,
     group => $username,
   }
-
-  git::ssh_authorized_key { $authorized_keys:
-    username => $username,
-  }
 }
 
-define git::ssh_authorized_key($username) {
+define git::authorized_key($key, $type="ssh-rsa") {
 
-  $comment = $name[0]
-  $key = $name[1]
-
-  $type = "ssh-rsa"
-
-  ssh_authorized_key { $comment:
+  ssh_authorized_key { "git@${name}":
     ensure  => present,
     key => $key,
-    target  => "${git::server::home_dir}/.ssh/authorized_keys",
-    user  => $username,
+    user  => $git::server::username,
     type  => $type,
   }
 }

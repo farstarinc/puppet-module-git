@@ -34,14 +34,16 @@ hosting git repositories over ssh:
     import git::server
 
 You can specify which ssh keys should have access to the git repositories
-stored under the git user's home directory by including the `git:server`
-class with this special syntax:
+stored under the git user's home directory by using the `git:authorized_key`
+resource:
 
-    $keys = [{"bob" => {key => "a8a7dgf7ad8j13g"}},
-             {"joe" => {key => "a8a7dgf7ad8j13g", type => "ssh-dsa"}}]
+    git::authorized_key  { "bob":
+      key => "a8a7dgf7ad8j13g",
+    }
 
-    class { "git::server":
-      authorized_keys => $keys,
+    git::authorized_key  { "joe":
+      key  => "a8a7dgf7ad8j13g",
+      type => "ssh-dsa",
     }
 
 You can use `git::repo` to create bare repositories under the git user's
