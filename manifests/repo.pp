@@ -7,6 +7,7 @@ define git::repo($ensure=present) {
     exec { "git::create_repo $repo_dir":
       command => "mkdir $repo_dir && cd $repo_dir && git init --bare",
       creates => $repo_dir,
+      require => Class["git::client"],
     }
 
   } elsif $ensure == absent {
