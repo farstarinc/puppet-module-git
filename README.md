@@ -37,8 +37,8 @@ You can specify which ssh keys should have access to the git repositories
 stored under the git user's home directory by including the `git:server`
 class with this special syntax:
 
-    $keys => [{"bob" => {key => "a8a7dgf7ad8j13g"}},
-              {"joe" => {key => "a8a7dgf7ad8j13g", type => "ssh-dsa"}}]
+    $keys = [{"bob" => {key => "a8a7dgf7ad8j13g"}},
+             {"joe" => {key => "a8a7dgf7ad8j13g", type => "ssh-dsa"}}]
 
     class { "git::server":
       authorized_keys => $keys,
