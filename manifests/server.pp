@@ -32,14 +32,14 @@ class git::server($authorized_keys=[], $username="git", $guid=2010) {
 
 define git::ssh_authorized_key($username) {
 
-  $type = "ssh-rsa"
-  if "type" in $name {
-    $type = $name[type]
-  }
+  $comment = $name[0]
+  $key = $name[1]
 
-  ssh_authorized_key { $name:
+  $type = "ssh-rsa"
+
+  ssh_authorized_key { $comment:
     ensure  => present,
-    key => $name[key],
+    key => $key,
     target  => "${git::server::home_dir}/.ssh/authorized_keys",
     user  => $username,
     type  => $type,
