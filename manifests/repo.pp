@@ -13,7 +13,7 @@ define git::repo($ensure=present) {
 
     exec { "git::repo::init $repo_dir":
       command => "git init --bare",
-      creates => "${repo_dir}/.git",
+      creates => "${repo_dir}/config",
       cwd => $repo_dir,
       user => $owner,
       group => $group,
