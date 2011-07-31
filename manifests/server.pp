@@ -1,14 +1,17 @@
-class git::server($authorized_keys=[], $username="git", $guid=2010) {
+class git::server($authorized_keys=[],
+                  $owner="git",
+                  $group="git",
+                  $guid=2010) {
 
-  $home_dir = "/home/${username}"
+  $home_dir = "/home/${owner}"
 
-  group { $username:
+  group { $group:
     ensure => present,
     allowdupe => false,
     gid => $guid,
   }
 
-  user { $username:
+  user { $owner:
     ensure => present,
     allowdupe => false,
     home => $home_dir,
@@ -21,8 +24,8 @@ class git::server($authorized_keys=[], $username="git", $guid=2010) {
 
   file { $home_dir:
     ensure => directory,
-    owner => $username,
-    group => $username,
+    owner => $owner,
+    group => $group,
   }
 }
 
@@ -31,7 +34,7 @@ define git::authorized_key($key, $type="ssh-rsa") {
   ssh_authorized_key { "git@${name}":
     ensure  => present,
     key => $key,
-    user  => $git::server::username,
+    user  => $git::server::owner,
     type  => $type,
   }
 }

@@ -1,14 +1,25 @@
 define git::repo($ensure=present) {
 
   $repo_dir = "${git::server::home_dir}/${name}"
+  $owner = $git::server::owner
+  $group = $git::server::group
 
   if $ensure == present {
-
-    exec { "git::create_repo $repo_dir":
-      command => "mkdir $repo_dir && cd $repo_dir && git init --bare",
-      creates => $repo_dir,
-      require => Class["git::client"],
+    file { $repo_dir:
+      ensure => directory,
+      owner => $owner,
+      group => $group,
     }
+
+    exec { "git::repo::init $repo_dir":
+      command => "git init --bare",
+      creates => "${repo_dir}/.git",
+      cwd => $repo_dir,
+      user => $owner,
+      group => $group,
+    }
+
+    Class["git::client"] -> File[$repo_dir] -> Exec["git::repo::init $repo_dir"]
 
   } elsif $ensure == absent {
 
