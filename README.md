@@ -10,6 +10,12 @@ Puppet 2.6. Patches for other operating systems are welcome.
 Installation
 ------------
 
+* Schedule `git-gc --auto --quiet` runs.
+
+
+Installation
+------------
+
 Clone this repo to a git directory under your Puppet modules directory:
 
     git clone git://github.com/uggedal/puppet-module-git.git git
