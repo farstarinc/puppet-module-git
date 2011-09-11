@@ -32,12 +32,12 @@ Usage
 
 The `git::client` class installs the git client:
 
-    import git::client
+    include git::client
 
 The `git::server` class creates a git user which can be used for
 hosting git repositories over ssh:
 
-    import git::server
+    include git::server
 
 You can specify which ssh keys should have access to the git repositories
 stored under the git user's home directory by using the `git:authorized_key`
