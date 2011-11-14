@@ -18,11 +18,13 @@ define git::clone($dir=undef,
     }
 
     if $ensure == present {
-      notify {"dbg1": message => "*** Cloning as $owner ***" }
-      exec { "git::clone ${repo_url}":
+      exec { "git::clone ${repo_url} as ${owner}":
+        user => $owner,
+        group => $group,
         command => "git clone ${repo_url} ${target_dir}",
-        unless => "[ \"$(ls -A ${target_dir}/\" ]",
-        logoutput => on_failure,
+        unless => "[ \"$(ls -A ${target_dir}/)\" ]",
+        logoutput => true,
+        require => Package["git-core"],
       }
     }
 }
